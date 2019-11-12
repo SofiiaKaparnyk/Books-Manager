@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block add_book %}
+<form action = '' method="post">
+    <p>Author:</p> {{form.author}}
+    <p>Name:</p> {{form.name}}
+    <p>Edition:</p> {{form.edition}}
+    <p>Year:</p> {{form.year}}
+    <p>Translator(if exists):</p> {{form.translator}}
+    <input type="submit" name="Add">
+</form>
+{% endblock %}

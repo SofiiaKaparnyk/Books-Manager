@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block add_user %}
+<form method="post" action="">
+    <p>Name:</p> {{form.name}}
+    <p>Email:</p> {{form.email}}
+    <p>Library(please, split the books with comma and do not use quotes):</p> {{form.library}}
+    <input type="submit" value="Add">
+</form>
+{% endblock %}

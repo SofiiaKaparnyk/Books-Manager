@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block user %}
+<p>I am user</p>
+<p>{{name}}</p>
+<p>{{email}}</p>
+<p>The books I have are below:</p>
+<ol>
+    {% for i in library.split(',') %}
+    <li>{{i}}</li>
+    {% endfor %}
+</ol>
+{% endblock %}
