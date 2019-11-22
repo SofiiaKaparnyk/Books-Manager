@@ -1,5 +1,7 @@
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, redirect, url_for
+
 from wtforms import StringField, Form, validators
+
 
 app_user = Blueprint('user', __name__)
 
@@ -12,7 +14,8 @@ class User:
 
 
 users_list = [User('John Harris', 'john@yahoo.com', ['Horror', 'Jane Eyre', 'Detective']),
-              User('Leyla Koppi', 'leyla@yahoo.com', ['University secrets', 'Eye', 'Start of the end'])]
+              User('Leyla Koppi', 'leyla@yahoo.com', ['University secrets', 'Eye', 'Start of the end']),
+              User('Cooper', 'cooper@yahoo.com', ['Paris', 'Illusion'])]
 
 
 class UserForm(Form):
@@ -25,11 +28,9 @@ class UserForm(Form):
 def add_user():
     form = UserForm()
     if request.method == 'POST':
-        data = {'name': request.form['name'], 'email': request.form['email'], 'library': request.form['library']}
-        users_list.append(User(data['name'], data['email'], list(data['library'].split(','))))
-        for i in users_list:
-            print(i.library)
-        return render_template('home.html')
+        data = {'name': request.form['name'], 'email': request.form['email'], 'library': list(request.form['library'].split(','))}
+        users_list.append(User(**data))
+        return redirect(url_for('book.add_book'))
     return render_template('add_user.html', form=form)
 
 

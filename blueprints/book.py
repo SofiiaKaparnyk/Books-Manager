@@ -5,7 +5,7 @@ app_book = Blueprint('book', __name__)
 
 
 class Book:
-    def __init__(self, author, name, edition, year, translator=None):
+    def __init__(self, author, name, edition, year, translator='No translator'):
         self.author = author
         self.name = name
         self.edition = edition
@@ -15,10 +15,12 @@ class Book:
 
 books_list = [Book('Stiven King', 'Horror', 'Kazochka', 1998, 'Ya'),
               Book('Stiven Hawking', 'Jane Eyre', 'Walk', 1992, 'Sofiia'),
-              Book('Den', 'Detective', 'Kazochka', 1998, 'Ty'),
-              Book('Bronte', 'Eye', 'Walk', 1992, 'Sofiia'),
+              Book('Den', 'Detective', 'Kazochka', 1998),
+              Book('Bronte', 'Eye', 'Walk', 1992, 'Jennis'),
               Book('Agata Kristi', 'University secrets', 'Kazochka', 1998, 'My'),
-              Book('Bronte', 'Start of the end', 'Walk', 1992, 'Sofiia')]
+              Book('Bronte', 'Start of the end', 'Walk', 1992),
+              Book('Kristi Janes', 'Paris', 'Kolobok', 1992),
+              Book('Santiago', 'Illusion', 'Svit', 1821, 'Migren')]
 
 
 class BookForm(Form):
@@ -31,17 +33,23 @@ class BookForm(Form):
 
 @app_book.route('/add_book', methods=['GET', 'POST'])
 def add_book():
-    form = BookForm()
+    form1 = BookForm()
     if request.method == 'POST':
         data = {'author': request.form['author'], 'name': request.form['name'], 'edition': request.form['edition'],
                 'year': request.form['year'], 'translator': request.form['translator']}
-        books_list.append(Book(data['author'], data['name'], data['edition'], data['year'], data['translator']))
-        for i in books_list:
-            print(i.author, i.year)
+        if data['translator'] == '':
+            data['translator'] = 'No translator'
+        books_list.append(Book(**data))
         return render_template('home.html')
-    return render_template('add_book.html', form=form)
+    return render_template('add_book.html', form=form1)
 
 
-@app_book.route('/<author>/<name>/<edition>/<year>/<translator>')
-def get_book(author, name, edition, year, translator):
-    return render_template('book.html', author=author, name=name, edition=edition, year=year, translator=translator)
+@app_book.route('/<name>')
+def get_book(name):
+    for book in books_list:
+        if book.name == name:
+            author = book.author
+            edition = book.edition
+            year = book.year
+            translator = book.translator
+    return render_template('book.html', name=name, author=author, edition=edition, year=year, translator=translator)

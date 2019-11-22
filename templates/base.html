@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Technique</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='main1.css') }}">-->
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 </head>
-<body>
+<body style="background: url('static/paper.jpg'); background-size: cover; ">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{{url_for('library.get_library')}}">Library</a></li>
+            <li><a href="{{url_for('user.add_user')}}">Add user</a></li>
+            <li><a href="{{url_for('book.add_book')}}">Add book</a></li>
+        </ul>
+    </div>
+</nav>
+
 {% block home %}
 {% endblock %}
 
@@ -22,5 +44,40 @@
 
 {% block book %}
 {% endblock %}
+
+
+<!-- Footer -->
+<footer class="page-footer font-small teal pt-4" style="color:black">
+
+    <!-- Footer Text -->
+    <div class="container-fluid text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row">
+
+            <hr class="clearfix w-100 d-md-none pb-3">
+
+            <!-- Grid column -->
+            <div class="col-md-12 mt-md-0 mt-3">
+
+                <!-- Content -->
+                <h5 class="text-uppercase font-weight-bold">Additional information</h5>
+                <p>Made with love</p>
+
+            </div>
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Footer Text -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3" style="color:maroon;">© 2019 Author: Kaparnyk Sofiia ♥
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 </body>
 </html>

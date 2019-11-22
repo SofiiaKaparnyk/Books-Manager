@@ -9,6 +9,7 @@ app.register_blueprint(app_user)
 app.register_blueprint(app_book)
 app.register_blueprint(app_library)
 
+
 @app.route('/', methods=['GET'])
 def home():
     if request.method == 'GET':
