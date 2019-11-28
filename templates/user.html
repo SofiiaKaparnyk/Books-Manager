@@ -1,13 +1,25 @@
 {% extends "base.html" %}
 
+
 {% block user %}
-<p>I am user</p>
-<p>{{name}}</p>
-<p>{{email}}</p>
-<p>The books I have are below:</p>
-<ol>
-    {% for i in library.split(',') %}
-    <li>{{i}}</li>
-    {% endfor %}
-</ol>
+<style>
+    .user{
+    border: 1px solid black;
+    margin:auto; width: 30%;
+    padding: 25px; color:#000066;
+    text-align: left;
+    font-size: 22px;
+    }
+
+</style>
+<div class="user">
+    <p>Name: {{name}}</p>
+    <p>Email: {{email}}</p>
+    <p>The books I have are below:</p>
+    <ul>
+        {% for i in library.split(',') %}
+        <li>{{i}}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

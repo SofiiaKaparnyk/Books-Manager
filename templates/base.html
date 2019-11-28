@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Technique</title>
+    <title>Books</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- jQuery library -->
@@ -17,7 +17,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
+            <a class="navbar-brand" href="{{url_for('home.home')}}">Home</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="{{url_for('library.get_library')}}">Library</a></li>
@@ -39,12 +39,11 @@
 {% block library %}
 {% endblock %}
 
-{% block user %}
-{% endblock %}
-
 {% block book %}
 {% endblock %}
 
+{% block user %}
+{% endblock %}
 
 <!-- Footer -->
 <footer class="page-footer font-small teal pt-4" style="color:black">

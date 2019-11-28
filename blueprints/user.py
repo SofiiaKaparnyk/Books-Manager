@@ -1,21 +1,10 @@
-from flask import render_template, request, Blueprint, redirect, url_for
+from flask import request, render_template, redirect, url_for, Blueprint
+from wtforms import Form, StringField, validators
 
-from wtforms import StringField, Form, validators
-
+from db import db
+from models.models import UserModel
 
 app_user = Blueprint('user', __name__)
-
-
-class User:
-    def __init__(self, name, email, library):
-        self.name = name
-        self.email = email
-        self.library = library
-
-
-users_list = [User('John Harris', 'john@yahoo.com', ['Horror', 'Jane Eyre', 'Detective']),
-              User('Leyla Koppi', 'leyla@yahoo.com', ['University secrets', 'Eye', 'Start of the end']),
-              User('Cooper', 'cooper@yahoo.com', ['Paris', 'Illusion'])]
 
 
 class UserForm(Form):
@@ -28,13 +17,15 @@ class UserForm(Form):
 def add_user():
     form = UserForm()
     if request.method == 'POST':
-        data = {'name': request.form['name'], 'email': request.form['email'], 'library': list(request.form['library'].split(','))}
-        users_list.append(User(**data))
+        data = {'name': request.form['name'], 'email': request.form['email'],
+                'library': request.form['library']}
+        user = UserModel(**data)
+        db.session.add(user)
+        db.session.commit()
         return redirect(url_for('book.add_book'))
     return render_template('add_user.html', form=form)
 
 
-@app_user.route('/<name>/<email>/<library>', methods=['GET'])
+@app_user.route('/<name>/<email>/<library>')
 def get_user(name, email, library):
     return render_template('user.html', name=name, email=email.replace('%', '@'), library=library)
-

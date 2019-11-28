@@ -1,10 +1,21 @@
 {% extends "base.html" %}
 
 {% block book %}
-<p>Here is the book</p>
-<p>{{author}}</p>
-<p>{{name}}</p>
-<p>{{edition}}</p>
-<p>{{year}}</p>
-<p>{{translator}}</p>
+<style>
+    .book{
+    border: 1px solid black;
+    margin:auto; width: 30%;
+    padding: 25px; color:#000066;
+    text-align: center;
+    font-size: 22px;
+    }
+</style>
+<div class="book">
+    <p>Author: {{author}}</p>
+    <p>Name: {{name}}</p>
+    <p>Edition: {{edition}}</p>
+    <p>Year: {{year}}</p>
+    <p>User: {{user}}</p>
+    <p>Translator: {{translator}}</p>
+</div>
 {% endblock %}

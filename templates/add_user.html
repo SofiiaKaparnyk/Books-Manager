@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block add_user %}
-<form method="post" action="">
-    <p>Name:</p> {{form.name}}
-    <p>Email:</p> {{form.email}}
-    <p>Library(please, split the books with comma and do not use quotes):</p> {{form.library}}
-    <p style="margin-top:15px;"><input type="submit" value="Add"></p>
-</form>
+<div style="width: 300px; margin: auto; color:black; text-align: center; font-size:16px;">
+    <form method="post" action="">
+        <p>Name:</p> {{form.name}}
+        <p>Email:</p> {{form.email}}
+        <p>Library<br>(please, split the books with comma and do not use quotes):</p> {{form.library}}
+        <p style="margin-top:15px;"><input type="submit" value="Add"></p>
+    </form>
+</div>
 {% endblock %}

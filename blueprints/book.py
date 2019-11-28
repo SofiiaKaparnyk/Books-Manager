@@ -1,26 +1,10 @@
-from flask import Blueprint, request, render_template
+from flask import request, render_template, redirect, url_for, Blueprint
 from wtforms import Form, StringField, validators, IntegerField
 
+from db import db
+from models.models import BookModel
+
 app_book = Blueprint('book', __name__)
-
-
-class Book:
-    def __init__(self, author, name, edition, year, translator='No translator'):
-        self.author = author
-        self.name = name
-        self.edition = edition
-        self.year = year
-        self.translator = translator
-
-
-books_list = [Book('Stiven King', 'Horror', 'Kazochka', 1998, 'Ya'),
-              Book('Stiven Hawking', 'Jane Eyre', 'Walk', 1992, 'Sofiia'),
-              Book('Den', 'Detective', 'Kazochka', 1998),
-              Book('Bronte', 'Eye', 'Walk', 1992, 'Jennis'),
-              Book('Agata Kristi', 'University secrets', 'Kazochka', 1998, 'My'),
-              Book('Bronte', 'Start of the end', 'Walk', 1992),
-              Book('Kristi Janes', 'Paris', 'Kolobok', 1992),
-              Book('Santiago', 'Illusion', 'Svit', 1821, 'Migren')]
 
 
 class BookForm(Form):
@@ -28,6 +12,7 @@ class BookForm(Form):
     name = StringField('name', validators=[validators.input_required()])
     edition = StringField('edition', validators=[validators.input_required()])
     year = IntegerField('year', validators=[validators.input_required()])
+    user = StringField('edition', validators=[validators.input_required()])
     translator = StringField('translator', validators=[validators.optional()])
 
 
@@ -36,20 +21,27 @@ def add_book():
     form1 = BookForm()
     if request.method == 'POST':
         data = {'author': request.form['author'], 'name': request.form['name'], 'edition': request.form['edition'],
-                'year': request.form['year'], 'translator': request.form['translator']}
-        if data['translator'] == '':
-            data['translator'] = 'No translator'
-        books_list.append(Book(**data))
-        return render_template('home.html')
+                'year': request.form['year'], 'user': request.form['user'], 'translator': request.form['translator']}
+        if request.form['translator'] == '':
+            data['translator'] = 'None'
+        book = BookModel(**data)
+        db.session.add(book)
+        db.session.commit()
+        return redirect(url_for('library.get_library'))
     return render_template('add_book.html', form=form1)
 
 
 @app_book.route('/<name>')
 def get_book(name):
-    for book in books_list:
-        if book.name == name:
-            author = book.author
-            edition = book.edition
-            year = book.year
-            translator = book.translator
-    return render_template('book.html', name=name, author=author, edition=edition, year=year, translator=translator)
+    try:
+        for book in BookModel.query.all():
+            if book.name == name:
+                author = book.author
+                edition = book.edition
+                year = book.year
+                user = book.user
+                translator = book.translator
+        return render_template('book.html', name=name, author=author, edition=edition, year=year, user=user,
+                               translator=translator)
+    except Exception:
+        return 'Book is not added'

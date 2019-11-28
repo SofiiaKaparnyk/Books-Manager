@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% block add_book %}
-<form action = '' method="post">
-    <p>Author:</p> {{form.author}}
-    <p>Name:</p> {{form.name}}
-    <p>Edition:</p> {{form.edition}}
-    <p>Year:</p> {{form.year}}
-    <p>Translator(if exists):</p> {{form.translator}}
-    <input type="submit" name="Add">
-</form>
+<div style="width: 300px; margin: auto; color:black; text-align: center; font-size:16px;">
+    <form action='' method="post">
+        <p>Author:</p> {{form.author}}
+        <p>Name:</p> {{form.name}}
+        <p>Edition:</p> {{form.edition}}
+        <p>Year:</p> {{form.year}}
+        <p>User:</p> {{form.user}}
+        <p>Translator(if exists):</p> {{form.translator}}
+        <p style="margin-top:15px;"><input type="submit" name="Add"></p>
+    </form>
+</div>
 {% endblock %}

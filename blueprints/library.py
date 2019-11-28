@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template
-from .user import users_list
-from .book import books_list
 
+from models.models import UserModel, BookModel
 
 app_library = Blueprint('library', __name__)
 
 
 @app_library.route('/library')
 def get_library():
-    return render_template('library.html', user_list=users_list, book_list=books_list)
+    return render_template('library.html', user_list=UserModel.query.all(), book_list=BookModel.query.all())
