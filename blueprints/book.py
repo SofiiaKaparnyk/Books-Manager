@@ -25,13 +25,14 @@ def add_book():
         if request.form['translator'] == '':
             data['translator'] = 'None'
         book = BookModel(**data)
+
         db.session.add(book)
         db.session.commit()
         return redirect(url_for('library.get_library'))
     return render_template('add_book.html', form=form1)
 
 
-@app_book.route('/<name>')
+@app_book.route('/book<name>')
 def get_book(name):
     try:
         for book in BookModel.query.all():
@@ -44,4 +45,11 @@ def get_book(name):
         return render_template('book.html', name=name, author=author, edition=edition, year=year, user=user,
                                translator=translator)
     except Exception:
-        return 'Book is not added'
+        return '<h1>Book is not added</h1>'
+
+
+hidden_books = []
+@app_book.route('/<name>')
+def hide_book(name):
+    hidden_books.append(name)
+    return f'Name: {hidden_books}'

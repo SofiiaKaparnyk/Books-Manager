@@ -13,6 +13,5 @@ class BookModel(db.Model):
 class UserModel(db.Model):
     name = db.Column(db.String, nullable=False, primary_key=True)
     email = db.Column(db.String, nullable=False)
-    library = db.Column(db.String, nullable=False)
     books = db.relationship('BookModel', backref='user_name')
 

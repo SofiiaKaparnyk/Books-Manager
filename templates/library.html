@@ -2,17 +2,25 @@
 
 {% block library %}
 
+<style>
+    .library{
+    border: 1px solid black;
+    margin:auto; width: 30%;
+    padding: 25px;
+    font-size: 18px;}
+</style>
+
 {% for i in user_list %}
-<div style="border: 1px solid black; margin:auto; width: 30%; padding: 25px; font-size: 18px;">
-    <a href="{{url_for('user.get_user', name=i['name'], email=i['email'], library=i['library'])}}"
+<div class="library">
+    <a href="{{url_for('user.get_user', user_name=i['name'])}}"
        style="color:black; font-size: 20px;">
         {{i.name}} </a>
     <p style="color: black;">Books of the user are:</p>
 
-    {% for name in i.library.split(',') %}
+    {% for book_name in i.books %}
     <ul>
         <li>
-            <a href="{{url_for('book.get_book', name=name.strip())}}">{{name}}</a>
+            <a href="{{url_for('book.get_book', name=book_name.name)}}" style="color:#000066;">{{book_name.name}}</a>
         </li>
     </ul>
     {% endfor %}

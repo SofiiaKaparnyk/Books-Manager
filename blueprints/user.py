@@ -10,15 +10,13 @@ app_user = Blueprint('user', __name__)
 class UserForm(Form):
     name = StringField('name', validators=[validators.input_required()])
     email = StringField('email', validators=[validators.input_required()])
-    library = StringField('library', validators=[validators.input_required()])
 
 
 @app_user.route('/add_user', methods=['GET', 'POST'])
 def add_user():
     form = UserForm()
     if request.method == 'POST':
-        data = {'name': request.form['name'], 'email': request.form['email'],
-                'library': request.form['library']}
+        data = {'name': request.form['name'], 'email': request.form['email']}
         user = UserModel(**data)
         db.session.add(user)
         db.session.commit()
@@ -26,6 +24,14 @@ def add_user():
     return render_template('add_user.html', form=form)
 
 
-@app_user.route('/<name>/<email>/<library>')
-def get_user(name, email, library):
-    return render_template('user.html', name=name, email=email.replace('%', '@'), library=library)
+@app_user.route('/user<user_name>')
+def get_user(user_name):
+    try:
+        for user in UserModel.query.all():
+            if user.name == user_name:
+                email = user.email
+                books = user.books
+        return render_template('user.html', name=user_name, email=email.replace('%', '@'), books=books)
+    except Exception:
+        return '<h1>User is not added</h1>'
+
