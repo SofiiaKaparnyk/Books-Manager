@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block add_wanted_book %}
+<div style="width: 300px; margin: auto; color:black; text-align: center; font-size:16px;">
+    <form action='' method="post">
+        <p>Author:</p> {{form.author}}
+        <p>Name:</p> {{form.name}}
+        <p style="margin-top:15px;"><input type="submit" name="Add"></p>
+    </form>
+</div>
+{% endblock %}

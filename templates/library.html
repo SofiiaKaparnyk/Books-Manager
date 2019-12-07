@@ -12,9 +12,9 @@
 
 {% for i in user_list %}
 <div class="library">
-    <a href="{{url_for('user.get_user', user_name=i['name'])}}"
-       style="color:black; font-size: 20px;">
-        {{i.name}} </a>
+    <a href="{{url_for('user.get_user', user_name=i['name'])}}" style="color:black; font-size: 20px;">
+        {{i.name}}
+    </a>
     <p style="color: black;">Books of the user are:</p>
 
     {% for book_name in i.books %}

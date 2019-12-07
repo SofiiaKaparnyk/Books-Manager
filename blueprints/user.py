@@ -1,8 +1,9 @@
 from flask import request, render_template, redirect, url_for, Blueprint
 from wtforms import Form, StringField, validators
 
+from config_email import send_email_to_user
 from db import db
-from models.models import UserModel
+from models.models import UserModel, WantedBookModel
 
 app_user = Blueprint('user', __name__)
 
@@ -10,6 +11,10 @@ app_user = Blueprint('user', __name__)
 class UserForm(Form):
     name = StringField('name', validators=[validators.input_required()])
     email = StringField('email', validators=[validators.input_required()])
+
+
+class Email(Form):
+    books = StringField('books', validators=[validators.input_required()])
 
 
 @app_user.route('/add_user', methods=['GET', 'POST'])
@@ -31,7 +36,20 @@ def get_user(user_name):
             if user.name == user_name:
                 email = user.email
                 books = user.books
-        return render_template('user.html', name=user_name, email=email.replace('%', '@'), books=books)
+                wanted_books = WantedBookModel.query.all()
+        return render_template('user.html', name=user_name, email=email.replace('%', '@'), books=books,
+                               wanted_books=wanted_books)
     except Exception:
         return '<h1>User is not added</h1>'
 
+
+@app_user.route('/send_email<user_name>', methods=['GET', 'POST'])
+def send_email(user_name):
+    form1 = Email()
+    if request.method == 'POST':
+        email = UserModel.query.filter_by(name=user_name).first().email
+        books = request.form['books']
+
+        send_email_to_user(email, books)
+        return redirect(url_for('user.get_user', user_name=user_name))
+    return render_template('email.html', form=form1)

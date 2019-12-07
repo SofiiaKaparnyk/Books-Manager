@@ -5,26 +5,27 @@
 <style>
     .user{
     border: 1px solid black;
-    margin:auto; width: 30%;
+    margin:auto;
+    width: 40%;
     padding: 25px; color:#000066;
     text-align: left;
     font-size: 22px;
     }
 
-
+    input{
+    color:#000066;
+    }
 </style>
+
 <div class="user">
     <p>Name: {{name}}</p>
     <p>Email: {{email}}</p>
-    <p>The books I have are below:</p>
+    <p>The books I can exchange are below:</p>
 
     <ul>
         {% for i in books %}
 
-        <li>{{i.name}}
-            <a href="{{url_for('book.hide_book', name=i.name)}}"><input style="font-size:8px;display:block;"
-                                                                        type="submit" value="Hide a book"></a>
-        </li>
+        <li>{{i.name}}</li>
 
         {% endfor %}
     </ul>
@@ -32,5 +33,41 @@
     <p style="margin-top:15px; height: 10px; font-size: 15px;">
         <a href="{{url_for('book.add_book')}}"><input type="submit" value="Add a new book"></a>
     </p>
+    <p style="margin-top:25px; height: 10px; font-size: 15px;">
+        <a href="{{url_for('book.hide_all_books', name=name)}}"><input type="submit" value="Hide all books"></a>
+    </p>
+    <p style="margin-top:25px; height: 10px; font-size: 15px;">
+        <a href="{{url_for('book.show_book', name=name)}}"><input type="submit" value="Show all books"></a>
+    </p>
+
+
+</div>
+
+
+<div class="user" style="margin-top: 15px;">
+    <div>
+        <p> The books I want to receive:</p>
+        {% for book in wanted_books %}
+        {% if book.user == name %}
+        <ul>
+            <li><p>Book name is: {{book.name}} ({{book.author}})</p></li>
+        </ul>
+        {% endif %}
+        {% endfor %}
+
+        <p style="margin-top:5px; height: 10px; font-size: 15px;">
+            <a href="{{url_for('book.add_wanted_book', user_name = name)}}">
+                <input type="submit" value="Add a new wanted book">
+            </a>
+        </p>
+
+
+        <p style="margin-top:25px;">You may send me the email with the books you want, just specify their names:</p>
+        <p style="margin-top:15px; height: 10px; font-size: 15px;">
+            <a href="{{url_for('user.send_email', user_name=name)}}">
+                <input type="submit" value="Click here to send an email">
+            </a>
+        </p>
+    </div>
 </div>
 {% endblock %}

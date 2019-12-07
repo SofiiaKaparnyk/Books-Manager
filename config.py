@@ -2,11 +2,11 @@ import os
 
 
 class Config:
-    PG_USER = 'sofiia'
-    PG_PASSWORD = 'password'
+    PG_USER = '<uer_name>'
+    PG_PASSWORD = '<password>'
     PG_HOST = 'localhost'
     PG_PORT = 5432
-    DB_NAME = 'project'
+    DB_NAME = '<database_name>'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}/{DB_NAME}"
     SECRET_KEY = 'secret_key'

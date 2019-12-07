@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block send_email %}
+<div style="width: 300px; margin: auto; color:black; text-align: center; font-size:16px;">
+    <form method="post" action="">
+        <p>Books you want:</p> {{form.books}}
+        <p style="margin-top:15px;"><input type="submit" value="Send an email"></p>
+    </form>
+</div>
+{% endblock %}
