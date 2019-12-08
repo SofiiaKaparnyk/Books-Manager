@@ -2,7 +2,7 @@
 
 ## Application runs the website, which allows users to exchange the books, add new user or book, add wanted books.
 
-## To run the site, you need to make only 2 configurations.
+To run the site, you need to make only 2 configurations.
 
 In the file config.py, you need to input PG_USER, PG_PASSWORD, and DB_NAME. If you have other settings, change them as well.
 
