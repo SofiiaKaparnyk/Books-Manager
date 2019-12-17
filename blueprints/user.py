@@ -1,20 +1,11 @@
 from flask import request, render_template, redirect, url_for, Blueprint
-from wtforms import Form, StringField, validators
 
 from config_email import send_email_to_user
 from db import db
+from forms.forms import UserForm, Email
 from models.models import UserModel, WantedBookModel
 
 app_user = Blueprint('user', __name__)
-
-
-class UserForm(Form):
-    name = StringField('name', validators=[validators.input_required()])
-    email = StringField('email', validators=[validators.input_required()])
-
-
-class Email(Form):
-    books = StringField('books', validators=[validators.input_required()])
 
 
 @app_user.route('/add_user', methods=['GET', 'POST'])

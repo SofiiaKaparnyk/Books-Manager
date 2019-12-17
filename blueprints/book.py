@@ -1,25 +1,9 @@
 from flask import request, render_template, redirect, url_for, Blueprint
-from wtforms import Form, StringField, validators, IntegerField
-
 from db import db
+from forms.forms import BookForm, WantedBookForm
 from models.models import BookModel, HiddenBookModel, WantedBookModel
 
 app_book = Blueprint('book', __name__)
-
-
-class BookForm(Form):
-    author = StringField('author', validators=[validators.input_required()])
-    name = StringField('name', validators=[validators.input_required()])
-    edition = StringField('edition', validators=[validators.input_required()])
-    year = IntegerField('year', validators=[validators.input_required()])
-    user = StringField('edition', validators=[validators.input_required()])
-    translator = StringField('translator', validators=[validators.optional()])
-
-
-class WantedBookForm(Form):
-    author = StringField('author', validators=[validators.input_required()])
-    name = StringField('name', validators=[validators.input_required()])
-    user = StringField('edition', validators=[validators.input_required()])
 
 
 @app_book.route('/add_book', methods=['GET', 'POST'])
